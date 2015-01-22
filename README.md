@@ -11,7 +11,7 @@ A collection of cool hidden and not so hidden features of Git and GitHub. This c
   - [Adjust Tab Space](#adjust-tab-space)
   - [Commit History by Author](#commit-history-by-author)
   - [Cloning a Repository](#cloning-a-repository)
-  - [Branch](#branch) 
+  - [Branch](#branch)
     - [Compare all Branches to Another Branch](#compare-all-branches-to-another-branch)
     - [Comparing Branches](#comparing-branches)
     - [Compare Branches across Forked Repositories](#compare-branches-across-forked-repositories)
@@ -28,6 +28,7 @@ A collection of cool hidden and not so hidden features of Git and GitHub. This c
   - [Images/GIFs](#imagesgifs)
     - [Embedding Images in GitHub Wiki](#embedding-images-in-github-wiki)
   - [Quick Quoting](#quick-quoting)
+  - [Pasting Clipboard Image to Comments](#pasting-clipboard-image-to-comments)
   - [Quick Licensing](#quick-licensing)
   - [Task Lists](#task-lists)
     - [Task Lists in Markdown Documents](#task-lists-in-markdown-documents)
@@ -43,7 +44,6 @@ A collection of cool hidden and not so hidden features of Git and GitHub. This c
     - [Diff or Patch of Pull Request](#diff-or-patch-of-pull-request)
     - [Rendering and diffing images](#rendering-and-diffing-images)
   - [Hub](#hub)
-  - [Decreasing Contributor Friction](#decreasing-contributor-friction)
   - [Contributing Guidelines](#contributing-guidelines)
   - [Octicons](#octicons)
   - [GitHub Resources](#github-resources)
@@ -75,24 +75,24 @@ Adding `?w=1` to any diff URL will remove any changes only in whitespace, enabli
 [*Read more about GitHub secrets.*](https://github.com/blog/967-github-secrets)
 
 ### Adjust Tab Space
-Adding `?ts=4` to a diff or file URL will display tab characters as 4 spaces wide instead of the default 8. The number after `ts` can be adjusted to suit your preference. This does not work on Gists, or raw file views.
+Adding `?ts=4` to a diff or file URL will display tab characters as 4 spaces wide instead of the default 8. The number after `ts` can be adjusted to suit your preference. This does not work on Gists, or raw file views, but a [Chrome extension](https://chrome.google.com/webstore/detail/github-tab-size/ofjbgncegkdemndciafljngjbdpfmbkn) can automate this.
 
-Here is a Go source file [before](https://github.com/pengwynn/flint/blob/master/flint/flint.go) adding `?ts=4`:
+Here is a Go source file before adding `?ts=4`:
 
 ![Before, tab space example](http://i.imgur.com/GIT1Fr0.png)
 
-...and this is [after](https://github.com/pengwynn/flint/blob/master/flint/flint.go?ts=4) adding `?ts=4`:
+...and this is after adding `?ts=4`:
 
 ![After, tab space example](http://i.imgur.com/70FL4H9.png)
 
 ### Commit History by Author
-To view all commits on a repo by author add `?author=username` to the URL.
+To view all commits on a repo by author add `?author={user}` to the URL.
 
 ```
 https://github.com/rails/rails/commits/master?author=dhh
 ```
 
-![DHH commit history](http://i.imgur.com/mDWwuaY.png)
+![DHH commit history](http://i.imgur.com/S7AE29b.png)
 
 [*Read more about the differences between commits views.*](https://help.github.com/articles/differences-between-commit-views)
 
@@ -118,27 +118,13 @@ https://github.com/{user}/{repo}/branches
 
 From here you can access the compare page or delete a branch with a click of a button.
 
-![Compare branches not merged into master in jquery/jquery repo - https://github.com/jquery/jquery/branches](http://i.imgur.com/gKWPe8a.png)
-
-However, often you need to compare branches to a branch other than `master` (e.g. `development`). To do this, append the URL with the name of the branch like so:
-
-```
-https://github.com/{user}/{repo}/branches/{branch}
-```
-
-![Compare branches not merged into `1.x-master` in jquery/jquery repo - https://github.com/jquery/jquery/branches/1.x-master](http://i.imgur.com/jpc6Urb.png)
-
-To see the merged branches, append `?merged=1` to the URL.
-
-![Compare branches merged in to `1.x-master` in jquery/jquery repo - https://github.com/jquery/jquery/branches/1.x-master?merged=1](http://i.imgur.com/KmYyCVh.png)
-
-This view allows you to delete branches easily from the page, without using the command-line.
+![Compare branches not merged into master in rails/rails repo - https://github.com/rails/rails/branches](http://i.imgur.com/0FEe30z.png)
 
 #### Comparing Branches
 To use GitHub to compare branches, change the URL to look like this:
 
 ```
-https://github.com/user/repo/compare/{range}
+https://github.com/{user}/{repo}/compare/{range}
 ```
 
 Where `{range} = master...4-1-stable`
@@ -149,7 +135,7 @@ For example:
 https://github.com/rails/rails/compare/master...4-1-stable
 ```
 
-![Rails branch compare example](http://i.imgur.com/0Z52X5Y.png)
+![Rails branch compare example](http://i.imgur.com/tIRCOsK.png)
 
 `{range}` can be changed to things like:
 
@@ -170,7 +156,7 @@ https://github.com/rails/rails/compare/master@{2014-10-04}...master
 To use GitHub to compare branches across forked repositories, change the URL to look like this:
 
 ```
-https://github.com/user/repo/compare/{foreign-user}:{branch}...{own-branch}
+https://github.com/{user}/{repo}/compare/{foreign-user}:{branch}...{own-branch}
 ```
 
 For example:
@@ -194,14 +180,15 @@ Gists can be treated as a full repository so they can be cloned like any other:
 $ git clone https://gist.github.com/tiimgreen/10545817
 ```
 
-![Gists](http://i.imgur.com/dULZXXo.png)
+![Gists](http://i.imgur.com/BcFzabp.png)
 
 This means you also can modify and push updates to Gists:
 
 ```bash
 $ git commit
-$ Username for 'https://gist.github.com': 
-$ Password for 'https://tiimgreen@gist.github.com': 
+$ git push
+Username for 'https://gist.github.com': 
+Password for 'https://tiimgreen@gist.github.com': 
 ```
 
 [*Read more about creating gists.*](https://help.github.com/articles/creating-gists)
@@ -267,7 +254,7 @@ This closes the issue and references the closing commit.
 ### Cross-Link Issues
 If you want to link to another issue in the same repository, simple type hash `#` then the issue number, it will be auto-linked.
 
-To link to an issue in another repository, `user_name/repo_name#ISSUE_NUMBER` e.g. `tiimgreen/toc#12`.
+To link to an issue in another repository, `{user}/{repo}#ISSUE_NUMBER` e.g. `tiimgreen/toc#12`.
 
 ![Cross-Link Issues](https://camo.githubusercontent.com/447e39ab8d96b553cadc8d31799100190df230a8/68747470733a2f2f6769746875622d696d616765732e73332e616d617a6f6e6177732e636f6d2f626c6f672f323031312f736563726574732f7265666572656e6365732e706e67)
 
@@ -314,25 +301,17 @@ GitHub uses [Linguist](https://github.com/github/linguist) to perform language d
 [*Read more about GitHub Flavored Markdown.*](https://help.github.com/articles/github-flavored-markdown)
 
 ### Emojis
-Emojis can be added to Pull Requests, Issues, commit messages, Markdown files, etc. using `:name_of_emoji:`:
-
-```
-:smile:
-```
-
-Would produce:
-
-:smile:
+Emojis can be added to Pull Requests, Issues, commit messages, etc. using `:name_of_emoji:`
 
 The full list of supported Emojis on GitHub can be found at [emoji-cheat-sheet.com](http://www.emoji-cheat-sheet.com/) or [scotch-io/All-Github-Emoji-Icons](https://github.com/scotch-io/All-Github-Emoji-Icons).
 
 The top 5 used Ejmojis on GitHub are:
 
-1. :shipit: - `:shipit:`
-2. :sparkles: - `:sparkles:`
-3. :-1: - `:-1:`
-4. :+1: - `:+1:`
-5. :clap: - `:clap:`
+1. `:shipit:`
+2. `:sparkles:`
+3. `:-1:`
+4. `:+1:`
+5. `:clap:`
 
 ### Images/GIFs
 Images and GIFs can be added to comments, READMEs etc.:
@@ -344,7 +323,7 @@ Images and GIFs can be added to comments, READMEs etc.:
 Raw images from the repo can be used by calling them directly.:
 
 ```
-![Alt Text](https://github.com/(user)/(repo)/raw/master/path/to/image.gif)
+![Alt Text](https://github.com/{user}/{repo}/raw/master/path/to/image.gif)
 ```
 
 ![Peter don't care](http://www.sheawong.com/wp-content/uploads/2013/08/keephatin.gif)
@@ -368,6 +347,16 @@ When on a comment thread and you want to quote something someone previously said
 ![Quick Quote](https://f.cloud.github.com/assets/296432/124483/b0fa6204-6ef0-11e2-83c3-256c37fa7abc.gif)
 
 [*Read more about quick quoting.*](https://github.com/blog/1399-quick-quotes)
+
+### Pasting Clipboard Image to Comments
+
+_(Works on Chrome browsers only)_
+
+After taking a screenshot and adding it to the clipboard (mac: `cmd-ctrl-shift-4`), you can simply paste (`cmd-v / ctrl-v`) the image into the comment section and it will be auto-uploaded to github.
+
+![Pasting Clipboard Image to Comments](https://cloud.githubusercontent.com/assets/39191/5794265/39c9b65a-9f1b-11e4-9bc7-04e41f59ea5f.png)
+
+[*Read more about issue attachments.*](https://help.github.com/articles/issue-attachments)
 
 ### Quick Licensing
 When creating a repository, GitHub gives you the option of adding in a pre-made license:
@@ -549,15 +538,6 @@ $ hub clone tiimgreen/toc
 
 [*Check out some more cool commands Hub has to offer.*](https://github.com/github/hub#commands)
 
-### Decreasing Contributor Friction
-If you want people to use and contribute to your project, you need to start by answering their most basic questions. What does the project do? How do I use it? How am I allowed to use it? How do I contribute? How do I get up and running in development? How do I make sure my new features didn't break old functionality?
-
-[Friction](https://github.com/rafalchmiel/friction) is a command line script that will check your project for common [answers to these questions](https://github.com/rafalchmiel/friction/wiki). This is some example output:
-
-[![Friction output](http://i.imgur.com/4EgpWo4.png)](https://github.com/rafalchmiel/friction)
-
-*Friction supports MRI 2.1.0, MRI 2.0.0, and MRI 1.9.3.*
-
 ### Contributing Guidelines
 Adding a `CONTRIBUTING` file to the root of your repository will add a link to your file when a contributor creates an Issue or opens a Pull Request.
 
@@ -703,7 +683,7 @@ $ git status
 
 Produces:
 
-![git status](http://i.imgur.com/o3PEHAA.png)
+![git status](http://i.imgur.com/qjPyvXb.png)
 
 By adding `-sb`:
 
@@ -713,7 +693,7 @@ $ git status -sb
 
 This is produced:
 
-![git status -sb](http://i.imgur.com/xNI1bT0.png)
+![git status -sb](http://i.imgur.com/K0OY3nm.png)
 
 [*Read more about the Git `status` command.*](http://git-scm.com/docs/git-status)
 
@@ -726,7 +706,7 @@ $ git log --all --graph --pretty=format:'%Cred%h%Creset -%C(auto)%d%Creset %s %C
 
 Produces:
 
-![git log --all --graph --pretty=format:'%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative](http://i.imgur.com/EARRQyJ.png)
+![git log --all --graph --pretty=format:'%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative](http://i.imgur.com/58eOtkW.png)
 
 Credit to [Palesz](http://stackoverflow.com/users/88355/palesz)
 
